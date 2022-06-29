@@ -1,15 +1,18 @@
 {
   "name": "backened",
   "version": "1.0.0",
-  "description": "inotebook-backened",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "@bolt",
+  "author": "2bolt",
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.1",
     "mongoose": "^6.4.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.18"
   }
 }
