@@ -4,7 +4,8 @@ const User = require("../models/User");
 const router = express.Router();
 const bcrpyt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-
+const { findById } = require("../models/User");
+const fetchUser=require('../middlewares/fetchUser')
 const JWT_SECTRET = "BoltIsAFantasticCSGOPlayer";
 //create a user using: POST "/api/auth/createUser"....Authentication not required
 
@@ -70,7 +71,7 @@ router.post(
     body("password", "password can not be blank").exists(),
   ],
   async (req, res) => {
-    console.log("Validating User details...")
+    console.log("Validating User details...");
     const error = validationResult(req);
     if (!error.isEmpty()) {
       res.status(400).json({ err: error.array() });
@@ -79,19 +80,19 @@ router.post(
     const { email, password } = req.body;
     try {
       //if user already exists
-      const user = await User.findOne({email});
+      const user = await User.findOne({ email });
       if (!user) {
         return res
           .status(400)
           .json({ err: "Please enter correct User Credentials" });
       }
-      const passComp =await bcrpyt.compare(password, user.password);
+      const passComp = await bcrpyt.compare(password, user.password);
       if (!passComp) {
         return res
           .status(400)
           .json({ err: "Please enter correct User Credentials" });
       }
-      console.log("Validation Successful!! User Found---")
+      console.log("Validation Successful!! User Found---");
       const data = {
         user: {
           id: user.id,
@@ -99,7 +100,7 @@ router.post(
       };
 
       const authToken = jwt.sign(data, JWT_SECTRET);
-      console.log("Success😊!!!User auth is \n"+authToken)
+      console.log("Success😊!!!User auth is \n" + authToken);
       res.status(200).json(authToken);
     } catch (err) {
       console.log(err.message);
@@ -107,5 +108,20 @@ router.post(
     }
   }
 );
+
+router.post('/getUser',fetchUser,async(req,res)=>{
+    
+  try {
+    const userId=req.user.id
+    const user=await User.findById(userId).select('-password');
+    console.log("Data found!!!")
+    return res.status(200).json({user});
+
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json({ err: "INTERNAL_SERVER_ERROR" });
+  
+  }
+})
 
 module.exports = router;
