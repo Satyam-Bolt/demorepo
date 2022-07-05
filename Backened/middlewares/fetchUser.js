@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const JWT_SECTRET = "BoltIsAFantasticCSGOPlayer";
 
 const fetchUser=(req,res,next)=>{
-
+    
     const token=req.header("auth-token");
     if(!token){
         return res.status(401).json({err:"OOPS😣!!Invalid Token"})

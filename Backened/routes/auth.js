@@ -4,11 +4,11 @@ const User = require("../models/User");
 const router = express.Router();
 const bcrpyt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { findById } = require("../models/User");
 const fetchUser=require('../middlewares/fetchUser')
 const JWT_SECTRET = "BoltIsAFantasticCSGOPlayer";
-//create a user using: POST "/api/auth/createUser"....Authentication not required
 
+
+//R1: POST "/api/auth/createUser"....Authentication not required
 router.post(
   "/createuser",
   [

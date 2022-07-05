@@ -5,9 +5,6 @@ const app = express();
 connectToMongo();
 const port = 5000;   
 
-app.get('/', (req, res) => {
-  res.send('Hello Bolt  !')
-})
 
 //middleware to get req body
 app.use(express.json())
