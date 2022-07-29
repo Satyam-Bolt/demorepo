@@ -33,7 +33,7 @@ router.post(
         return res.status(400).json({ error: "User already esist..." });
       }
 
-      console.log("No user Found!!! Creating User....");
+      console.log("! Creating User....");
 
       //encrypting the password + salt added
       let salt = await bcrpyt.genSalt(10);
